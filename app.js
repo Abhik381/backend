@@ -10,11 +10,17 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
 app.get("/", function(req,res){
-  res.send("hii")
+  res.render("index")
 })
 
-app.get("/read",function(req,res){
-  res.send("read")
+app.get("/login",function(req,res){
+  res.render("login")
 })
 
-app.listen(3000)
+app.post("/register", function(req,res){
+
+})
+
+app.listen(3000, function(req,res){
+  console.log("Server started on port no 3000.")
+})
