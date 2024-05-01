@@ -57,7 +57,7 @@ app.post("/login", async function(req,res){
   })
 })
 
-app.post("/logout", function(req,res){
+app.get("/logout", function(req,res){
   res.cookie("token", "");
   res.redirect("/login");
 })
