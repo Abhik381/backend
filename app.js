@@ -18,7 +18,7 @@ app.get("/login",function(req,res){
   res.render("login")
 })
 
-app.get("/profile", function(req,res){
+app.get("/profile", isLoggedIn , function(req,res){
   res.render("profile");
 })
 
@@ -61,6 +61,16 @@ app.get("/logout", function(req,res){
   res.cookie("token", "");
   res.redirect("/login");
 })
+
+function isLoggedIn(){
+  if(req.cookies.token === "") res.redirect("/login");
+  else{
+  let userData = jwt.verify(req.cookies.token, "abhikmondal");
+  req.user = userData;
+  console.log(userData);
+  }
+
+}
 
 app.listen(3000, function(req,res){
   console.log("Server started on port no 3000.")
