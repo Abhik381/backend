@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userModel = require("./models/user");
 const postModel = require("./models/post");
-const user = require("./models/user");
 
 app.set("view engine", "ejs");
 app.use(express.json());
