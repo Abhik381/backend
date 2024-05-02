@@ -4,6 +4,8 @@ const app = express();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userModel = require("./models/user");
+const postModel = require("./models/post");
+const user = require("./models/user");
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -18,8 +20,14 @@ app.get("/login",function(req,res){
   res.render("login")
 })
 
-app.get("/profile", isLoggedIn , function(req,res){
-  res.render("profile");
+app.get("/profile", isLoggedIn , async function(req,res){
+  let user = await userModel.findOne({email: req.user.email}).populate("posts");
+  console.log(user);
+  res.render("profile", {user});
+})
+
+app.get("/post", function(req,res){
+  res.render("post")
 })
 
 app.post("/register", async function(req,res){
@@ -62,14 +70,26 @@ app.get("/logout", function(req,res){
   res.redirect("/login");
 })
 
-function isLoggedIn(){
+app.post("/post", isLoggedIn, async function(req,res){
+  let {title,details} = req.body;
+  const user = await userModel.findOne({email: req.user.email});
+  let post = await postModel.create({
+    title,
+    details,
+    user: user._id
+  });
+  user.posts.push(post);
+  await user.save();
+  res.redirect("/profile");
+})
+
+function isLoggedIn(req,res,next){
   if(req.cookies.token === "") res.redirect("/login");
   else{
   let userData = jwt.verify(req.cookies.token, "abhikmondal");
   req.user = userData;
-  console.log(userData);
+  next();
   }
-
 }
 
 app.listen(3000, function(req,res){
