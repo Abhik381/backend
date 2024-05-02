@@ -21,12 +21,16 @@ app.get("/login",function(req,res){
 
 app.get("/profile", isLoggedIn , async function(req,res){
   let user = await userModel.findOne({email: req.user.email}).populate("posts");
-  console.log(user);
   res.render("profile", {user});
 })
 
 app.get("/post", function(req,res){
   res.render("post")
+})
+
+app.get("/edit/:id", isLoggedIn, async function(req,res){
+ let post = await postModel.findOne({_id: req.params.id});
+ res.render("edit",{post})
 })
 
 app.post("/register", async function(req,res){
@@ -70,15 +74,19 @@ app.get("/logout", function(req,res){
 })
 
 app.post("/post", isLoggedIn, async function(req,res){
-  let {title,details} = req.body;
+  let {details} = req.body;
   const user = await userModel.findOne({email: req.user.email});
   let post = await postModel.create({
-    title,
     details,
     user: user._id
   });
   user.posts.push(post);
   await user.save();
+  res.redirect("/profile");
+})
+
+app.post("/edit/:id", async function(req,res){
+ let post = await postModel.findOneAndUpdate({_id: req.params.id},{details: req.body.details});
   res.redirect("/profile");
 })
 

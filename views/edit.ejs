@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="w-full p-10 flex flex-col bg-zinc-900 items-center justify-center gap-5">
+    <h1 class="text-2xl text-stone-600 font-semibold tracking-tight">Update post</h1>
+    <form action="" method="post">
+        <textarea class="bg-transparent border-2 border-zinc-600 resize-none p-3 rounded-md w-full" name="details"><%= post.details %></textarea>
+        <input class="px-5 py-3 bg-yellow-600 rounded-md text-zinc-900" type="submit" value="Update">
+    </form>
+</body>
+</html>
