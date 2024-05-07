@@ -7,6 +7,10 @@ const userSchema = mongoose.Schema({
     email: String,
     number: Number,
     password: String,
+    profilePic: {
+        type: String,
+        default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUozDaCC6IK0rvshNi65g25EDSQrvC5HJtuQ&usqp=CAU"
+    },
     posts: [
         {
             type: mongoose.Schema.Types.ObjectId,

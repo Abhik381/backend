@@ -3,12 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+            rel="stylesheet"
+            />
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="w-full min-h-screen bg-zinc-900 flex flex-col items-center p-5">
+    <form class="hidden" action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" id="">
+    </form>
+    <div class="button hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <input type="button" value="Upload" class="px-5 py-2 bg-blue-600 rounded-md">
+    </div>
     <nav class="mb-3 w-full px-5 py-3 flex items-center justify-between bg-zinc-200">
-        <div class="w-10 h-10 rounded-full bg-orange-600"></div>
+        <div class="relative w-10 h-10 rounded-full bg-orange-600">
+            <img class="w-full h-full object-cover" src="/images/uploads/ user.profilePic %>" alt="profileImage">
+            <i class="ri-camera-2-line text-xl font-semibold absolute -bottom-2 right-0"></i>
+        </div>
         <a class="px-5 py-3 bg-red-500 rounded-md" href="/logout">Logout</a>
     </nav>
     <strong class="text-2xl text-white font-semibold tracking-tight">@<%= user.username %></strong>
@@ -32,5 +45,15 @@
             <%}%>
         <% }) %>
     </div>
+
+    <script>
+        document.querySelector("nav i").addEventListener("click", function(){
+            document.querySelector("input").click();
+            document.querySelector(".button").style.display = "block";
+            document.querySelector(".button").addEventListener("click",function(){
+                document.querySelector("form").submit();
+            })
+        })
+    </script>
 </body>
 </html>

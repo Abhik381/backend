@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userModel = require("./models/user");
 const postModel = require("./models/post");
+const upload = require("./config/multer")
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -90,6 +91,13 @@ app.post("/edit/:id", async function(req,res){
   res.redirect("/profile");
 })
 
+app.post("/upload",isLoggedIn, upload.single("image"), async function(req,res){
+  let user = await userModel.findOne({email: req.user.email});
+  user.profilePic = req.file.filename;
+  await user.save();
+  res.redirect("/profile");
+})
+
 function isLoggedIn(req,res,next){
   if(req.cookies.token === "") res.redirect("/login");
   else{
@@ -99,6 +107,6 @@ function isLoggedIn(req,res,next){
   }
 }
 
-app.listen(3000, function(req,res){
+app.listen(8080, function(req,res){
   console.log("Server started on port no 3000.")
 })
