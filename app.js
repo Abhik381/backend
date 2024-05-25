@@ -156,6 +156,6 @@ function isLoggedIn(req,res,next){
   }
 }
 
-app.listen(8080, function(req,res){
-  console.log("Server started on port no 3001.")
+app.listen(process.env.PORT, function(req,res){
+  console.log("Server started on port no ", process.env.PORT)
 })
