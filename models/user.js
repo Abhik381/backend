@@ -7,10 +7,17 @@ const userSchema = mongoose.Schema({
     email: String,
     number: Number,
     password: String,
+    profilePic: String,
     posts: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "post"
+        }
+    ],
+    followers: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "user",
         }
     ]
 },{timestamps: true});
