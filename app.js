@@ -8,7 +8,10 @@ const { postModel } = require("./models/post");
 const { commentModel } = require("./models/post")
 const upload = require("./config/multer");
 const path = require("path");
-const { log } = require("util");
+const cors = require("cors");
+
+
+app.use(cors())
 
 app.set("view engine", "ejs");
 app.use(express.json());
