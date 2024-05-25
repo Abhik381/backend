@@ -10,9 +10,13 @@ const upload = require("./config/multer");
 const path = require("path");
 const cors = require("cors");
 
+const port = process.env.PORT || 8000;
 
-app.use(cors())
-
+app.use(cors({
+  origin: "*",
+  credentials: true,
+  methods: ["GET","POST"]
+}))
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -159,6 +163,6 @@ function isLoggedIn(req,res,next){
   }
 }
 
-app.listen(process.env.PORT, function(req,res){
-  console.log("Server started on port no ", process.env.PORT)
+app.listen(port, function(req,res){
+  console.log("Server started on port no ", port)
 })
