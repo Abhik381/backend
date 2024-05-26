@@ -1,6 +1,12 @@
 const mongoose = require("mongoose")
 
-mongoose.connect("mongodb+srv://abhik:abhik2005@backend.xw7qlrx.mongodb.net/mini_project_1?retryWrites=true&w=majority&appName=Backend");
+mongoose.connect(process.env.MONGODB_URI)
+.then(()=>{
+    console.log("Database connected");
+})
+.catch((err)=>{
+    console.log("Database not connected: ", console.error());
+})
 
 const userSchema = mongoose.Schema({
     username: String,
